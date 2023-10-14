@@ -12,6 +12,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
 
     steps:
       - uses: actions/checkout@v2
@@ -28,10 +31,14 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: '${{ github.workspace }}/api/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
+
     needs: build
     environment:
       name: 'Production'
