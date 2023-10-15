@@ -12,9 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./api
 
     steps:
       - uses: actions/checkout@v2
@@ -31,14 +28,10 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: '${{ github.workspace }}/api/target/*.jar'
+          path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./api
-
     needs: build
     environment:
       name: 'Production'
@@ -56,5 +49,5 @@ jobs:
         with:
           app-name: 'casabella-api'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_295D28D0CBDA4CB2BD310DD3657E99EE }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FC3FC0F0D467441C8547A4DA8E215F29 }}
           package: '*.jar'
